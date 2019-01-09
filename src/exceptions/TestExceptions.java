@@ -10,7 +10,6 @@ public class TestExceptions {
 	static final String[] SecondParent = {"Error","Error","Error","Error","Exception","RuntimeException","Exception","Exception","RuntimeException","Exception","Exception","Throwable","Exception","Exception"};
 	static final String[] ThirdParent = {"Throwable","Throwable","Throwable","Throwable","Throwable","Exception","Throwable","Throwable","Exception","Throwable","Throwable","","Throwable","Throwable"};
 	static final String[] FourthParent = {"","","","","","Throwable","","","Throwable","","","","",""};
-	static String[] Hints=new String[14];
 	static int punten;
 	static int bonuspunten;
 
@@ -42,8 +41,8 @@ public class TestExceptions {
 	
 	static boolean antwoord(Scanner scanner) {
 		boolean boolie=true;
-		int k=15;
 		do {
+			int k=15;
 			String input = scanner.next();
 			for(int i=0;i<Exceptions.length;i++) {
 				if(input.equals(Exceptions[i])) {
@@ -64,7 +63,7 @@ public class TestExceptions {
 				parent1(scanner, k);
 			} else {
 				boolie=false;
-				hint(scanner);
+				hint();
 			}
 		} while(boolie);
 		return true;
@@ -74,56 +73,85 @@ public class TestExceptions {
 	
 	static void parent1(Scanner scanner, int i) {
 		System.out.println("En hoe heet de superclass van "+Exceptions[i]+"?");
-		String input=scanner.next();
-		if(input.equals(FirstParent[i])) {
-			System.out.print("Correct! ");
-			parent2(scanner,i);
-		} else {
-			System.out.println("Helaas, dat is niet correct: de superclass van "+Exceptions[i]+" is "+FirstParent[i]+".");
+		while(true){
+			String input=scanner.next();
+			if(input.equals(FirstParent[i])) {
+				System.out.print("Correct! ");
+				parent2(scanner,i);
+				break;
+			} else if(input.equalsIgnoreCase(FirstParent[i])) {
+				System.out.println("So close! Maar remember, Java is case sensitive...\nProbeer het opnieuw:");
+				continue;
+			} else {
+				System.out.println("Helaas, dat is niet correct: de superclass van "+Exceptions[i]+" is "+FirstParent[i]+".");
+				break;
+			}
 		}
 	}
 	
 	static void parent2(Scanner scanner, int i) {
 		System.out.println("En hoe heet de superclass van "+FirstParent[i]+"?");
-		String input=scanner.next();
-		if(input.equals(SecondParent[i])) {
-			System.out.print("Correct! ");
-			if(!ThirdParent[i].equals("")) {
-				parent3(scanner,i);
-			} else {
-				System.out.println("Dus de stamboom van "+Exceptions[i]+" is: \n\t"+SecondParent[i]+"\n\t  "+FirstParent[i]+"\n\t    "+Exceptions[i]);
-				bonus(scanner,i);
+		while(true) {
+			String input=scanner.next();
+			if(input.equals(SecondParent[i])) {
+				System.out.print("Correct! ");
+				if(!ThirdParent[i].equals("")) {
+					parent3(scanner,i);
+				} else {
+					System.out.println("Dus de stamboom van "+Exceptions[i]+" is: \n\t"+SecondParent[i]+"\n\t  "+FirstParent[i]+"\n\t    "+Exceptions[i]);
+					bonus(scanner,i);
+				}
+				break;
+			} else if(input.equalsIgnoreCase(SecondParent[i])) {
+				System.out.println("So close! Maar remember, Java is case sensitive...\nProbeer het opnieuw:");
+				continue;
+			}else {
+				System.out.println("Helaas, dat is niet correct: de superclass van "+FirstParent[i]+" is "+SecondParent[i]+".");
+				break;
 			}
-		} else {
-			System.out.println("Helaas, dat is niet correct: de superclass van "+FirstParent[i]+" is "+SecondParent[i]+".");
 		}
 	}
 	
 	static void parent3(Scanner scanner, int i) {
 		System.out.println("En hoe heet de superclass van "+SecondParent[i]+"?");
-		String input=scanner.next();
-		if(input.equals(ThirdParent[i])) {
-			System.out.print("Correct! ");
-			if(!FourthParent[i].equals("")) {
-				parent4(scanner,i);
-			} else {
-				System.out.println("Dus de stamboom van "+Exceptions[i]+" is: \n\t"+ThirdParent[i]+"\n\t  "+SecondParent[i]+"\n\t    "+FirstParent[i]+"\n\t      "+Exceptions[i]);
-				bonus(scanner,i);
+		while(true) {
+			String input=scanner.next();
+			if(input.equals(ThirdParent[i])) {
+				System.out.print("Correct! ");
+				if(!FourthParent[i].equals("")) {
+					parent4(scanner,i);
+				} else {
+					System.out.println("Dus de stamboom van "+Exceptions[i]+" is: \n\t"+ThirdParent[i]+"\n\t  "+SecondParent[i]+"\n\t    "+FirstParent[i]+"\n\t      "+Exceptions[i]);
+					bonus(scanner,i);
+				}
+				break;
+			} else if(input.equalsIgnoreCase(ThirdParent[i])) {
+				System.out.println("So close! Maar remember, Java is case sensitive...\nProbeer het opnieuw:");
+				continue;				
+			}else{
+				System.out.println("Helaas, dat is niet correct: de superclass van "+SecondParent[i]+" is "+ThirdParent[i]+".");
+				break;
 			}
-		} else {
-			System.out.println("Helaas, dat is niet correct: de superclass van "+SecondParent[i]+" is "+ThirdParent[i]+".");
+
 		}
 	}	
 	
 	static void parent4(Scanner scanner, int i) {
 		System.out.println("En hoe heet de superclass van "+ThirdParent[i]+"?");
-		String input=scanner.next();
-		if(input.equals(FourthParent[i])) {
-			System.out.print("Correct! ");
-			System.out.println("Dus de stamboom van "+Exceptions[i]+" is: \n\t  "+FourthParent[i]+"\n\t    "+ThirdParent[i]+"\n\t      "+SecondParent[i]+"\n\t        "+FirstParent[i]+"\n\t          "+Exceptions[i]);
-			bonus(scanner,i);
-		} else {
-			System.out.println("Helaas, dat is niet correct: de superclass van "+FirstParent[i]+" is "+SecondParent[i]+".");
+		while(true) {
+			String input=scanner.next();
+			if(input.equals(FourthParent[i])) {
+				System.out.print("Correct! ");
+				System.out.println("Dus de stamboom van "+Exceptions[i]+" is: \n\t  "+FourthParent[i]+"\n\t    "+ThirdParent[i]+"\n\t      "+SecondParent[i]+"\n\t        "+FirstParent[i]+"\n\t          "+Exceptions[i]);
+				bonus(scanner,i);
+				break;
+			} else if(input.equalsIgnoreCase(FourthParent[i])){
+				System.out.println("So close! Maar remember, Java is case sensitive...\nProbeer het opnieuw:");
+				continue;
+			} else {
+				System.out.println("Helaas, dat is niet correct: de superclass van "+FirstParent[i]+" is "+SecondParent[i]+".");
+				break;
+			}
 		}
 	}
 	
@@ -137,11 +165,11 @@ public class TestExceptions {
 				System.out.println("Klopt als een bus: "+Exceptions[i]+" is inderdaad CHECKED.");
 				bonuspunten++;
 				break;
-			} else if (input.equals("unchecked") && i<11) {
+			} else if (input.equalsIgnoreCase("unchecked") && i<11) {
 				System.out.println("Klopt als een bus: "+Exceptions[i]+" is inderdaad UNCHECKED.");
 				bonuspunten++;
 				break;
-			} else if(!input.equals("checked") && !input.equals("unchecked")){
+			} else if(!input.equalsIgnoreCase("checked") && !input.equalsIgnoreCase("unchecked")){
 				System.out.println("Dit is geen geldige invoer, probeer het opnieuw: ");
 				continue;
 			} else {
@@ -151,7 +179,7 @@ public class TestExceptions {
 		}
 	}
 	
-	static void hint(Scanner scanner) {
+	static void hint() {
 		String f = exceptions.get(0);
 		int index=0;
 		for(int i=0;i<Exceptions.length;i++) {
